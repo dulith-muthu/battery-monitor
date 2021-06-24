@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using WorkerService1.ConfigurationSettings;
-using WorkerService1.Util;
+using BatteryMonitor.ConfigurationSettings;
+using BatteryMonitor.Util;
 
-namespace WorkerService1
+namespace BatteryMonitor
 {
 	public class Worker : BackgroundService
 	{

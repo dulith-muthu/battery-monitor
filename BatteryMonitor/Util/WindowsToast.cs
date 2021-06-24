@@ -2,7 +2,7 @@
 using Windows.Data.Xml.Dom;
 using System.IO;
 
-namespace WorkerService1.Util
+namespace BatteryMonitor.Util
 {
     class WindowsToast
     {

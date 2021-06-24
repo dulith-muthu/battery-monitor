@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace WorkerService1
+namespace BatteryMonitor
 {
 	public class Program
 	{

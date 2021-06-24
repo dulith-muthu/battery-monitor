@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WorkerService1.ConfigurationSettings
+namespace BatteryMonitor.ConfigurationSettings
 {
     class AppSettings
     {

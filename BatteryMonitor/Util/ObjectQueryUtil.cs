@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Management;
 
-namespace WorkerService1.Util
+namespace BatteryMonitor.Util
 {
     class ObjectQueryUtil
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace WorkerService1.Util
+namespace BatteryMonitor.Util
 {
     class ShellScript
     {

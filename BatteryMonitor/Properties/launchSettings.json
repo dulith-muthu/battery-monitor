@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "WorkerService1": {
+    "BatteryMonitor": {
       "commandName": "Project",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"

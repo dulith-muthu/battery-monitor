@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>dotnet-WorkerService1-51FB3531-2B02-4E87-B352-F29F16285CDA</UserSecretsId>
+    <UserSecretsId>dotnet-BatteryMonitor-51FB3531-2B02-4E87-B352-F29F16285CDA</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,5 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="5.0.1" />
     <PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />
     <PackageReference Include="System.Management" Version="5.0.0" />
+	<Content Include="Static\**">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
 </Project>
