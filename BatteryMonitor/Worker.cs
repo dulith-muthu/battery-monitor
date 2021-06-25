@@ -14,6 +14,10 @@ namespace BatteryMonitor
 		private readonly ILogger<Worker> _logger;
 		private readonly IConfiguration _config;
 		readonly string imagePath = String.Format("{0}\\Static\\{1}", Environment.CurrentDirectory, "error.png");
+		private AppSettings _appSettings;
+		private WindowsToast _toaster;
+		// private ShellScript _shellScript;
+		private ObjectQueryUtil _ojectQuery;
 
 		public Worker(ILogger<Worker> logger, IConfiguration configuration)
 		{
@@ -21,19 +25,30 @@ namespace BatteryMonitor
 			_config = configuration;
 		}
 
-		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public override Task StartAsync(CancellationToken cancellationToken)
 		{
-			var _appSettings = new AppSettings();
+			_appSettings = new AppSettings();
 			_config.GetSection(AppSettings.Position).Bind(_appSettings);
-			var _toaster = new WindowsToast();
-			// var shellScript = new ShellScript();
-			var ojectQuery = new ObjectQueryUtil();
+			//_toaster = new WindowsToast();
+			_ojectQuery = new ObjectQueryUtil();
+			//_shellScript = new ShellScript();
+			return base.StartAsync(cancellationToken);
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+			_logger.LogInformation("Service Stopped!");
+			return base.StopAsync(cancellationToken);
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+		{
 			int prevBattryPer = 0;
 
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				string currBattryPerStr = "0";
-				var battryDetail = ojectQuery.ExecuteObjectQuerry(_appSettings.BatteryProperties, _appSettings.BatteryClass);
+				var battryDetail = _ojectQuery.ExecuteObjectQuerry(_appSettings.BatteryProperties, _appSettings.BatteryClass);
 				battryDetail.TryGetValue(_appSettings.BatteryProperties[0], out currBattryPerStr);
 				int currBattryPer = Int32.Parse(currBattryPerStr);
 
@@ -41,7 +56,7 @@ namespace BatteryMonitor
 				battryDetail.TryGetValue(_appSettings.BatteryProperties[1], out battryStatusStr);
 				bool isPluggedIn = battryStatusStr == "2";
 
-				//_logger.LogInformation("Battry per: {0} \n      Is plugged: {1}", currBattryPer, isPluggedIn);
+				_logger.LogInformation("Battery percentage: {0}\tIs plugged: {1}", currBattryPer, isPluggedIn);
 
 				// old method
 				// var shellOut = shellScript.Run(_appSettings.CheckPluggedIn);
@@ -49,8 +64,9 @@ namespace BatteryMonitor
 
 				if (currBattryPer < prevBattryPer && isPluggedIn)
 				{
-					_toaster.GenerateToast(_appSettings.AppId, imagePath, _appSettings.ToastMessage, "", "");
-					_logger.LogInformation("Plugged-in Not Charging, Battery: {0}", currBattryPer);
+					// cannot show toast messages from a windows service, Sad ;-(
+					//_toaster.GenerateToast(_appSettings.AppId, imagePath, _appSettings.ToastMessage, "", "");
+					_logger.LogError("Plugged-in Not Charging, Battery: {0}", currBattryPer);
 				}
 
 
